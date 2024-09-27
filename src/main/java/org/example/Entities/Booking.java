@@ -1,15 +1,17 @@
 package org.example.Entities;
 
+import java.time.LocalDate;
+
 public class Booking {
     private Room room;
     private Guest guest;
-    private String checkInDate;
-    private String checkOutDate;
+    private LocalDate checkInDate;
+    private LocalDate checkOutDate;
 
     public Booking() {
     }
 
-    public Booking(Room room, Guest guest, String checkInDate, String checkOutDate) {
+    public Booking(Room room, Guest guest, LocalDate checkInDate, LocalDate checkOutDate) {
         this.room = room;
         this.guest = guest;
         this.checkInDate = checkInDate;
@@ -17,9 +19,14 @@ public class Booking {
         guest.addReservation(this);  // Add this booking to the guest's reservation history
         room.setAvailable(false);  // Set the room as unavailable when booked
     }
-    public void modifyBooking(String newCheckInDate, String newCheckOutDate) {
+    public void modifyBooking(LocalDate newCheckInDate, LocalDate newCheckOutDate) {
         this.checkInDate = newCheckInDate;
         this.checkOutDate = newCheckOutDate;
+    }
+
+    public void cancelBooking() {
+        room.setAvailable(true);  // Make the room available again
+        System.out.println("Booking for " + guest.getName() + " in Room #" + room.getRoomNumber() + " has been canceled.");
     }
 
     public Room getRoom() {
@@ -30,13 +37,14 @@ public class Booking {
         return guest;
     }
 
-    public String getCheckInDate() {
+    public LocalDate getCheckInDate() {
         return checkInDate;
     }
 
-    public String getCheckOutDate() {
+    public LocalDate getCheckOutDate() {
         return checkOutDate;
     }
+
 
     @Override
     public String toString() {
